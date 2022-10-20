@@ -1,371 +1,131 @@
-<img height="100" alt="hypertest_logo" src="https://user-images.githubusercontent.com/1688653/153136695-f5292c75-5d2f-4c70-aeb5-0f00a6962730.png">
+# How to run manual tests on real devices using LambdaTest
 
-HyperTest is a smart test orchestration platform to run end-to-end Selenium tests at the fastest speed possible. HyperTest lets you achieve an accelerated time to market by providing a test infrastructure that offers optimal speed, test orchestration, and detailed execution logs.
+## Goal
 
-The overall experience helps teams test code and fix issues at a much faster pace. HyperTest is configured using a YAML file. Instead of moving the Hub close to you, HyperTest brings the test scripts close to the Hub!
+In this tutorial, you will learn what manual testing is, what LambdaTest is, and how to use Codemagic with LambdaTest to test a Flutter application.
 
-* <b>HyperTest HomePage</b>: https://www.lambdatest.com/hypertest
-* <b>Lambdatest HomePage</b>: https://www.lambdatest.com
-* <b>LambdaTest Support</b>: [support@lambdatest.com](mailto:support@lambdatest.com)
+## Prerequisites
 
-To know more about how HyperTest does intelligent Test Orchestration, do check out [HyperTest Getting Started Guide](https://www.lambdatest.com/support/docs/getting-started-with-hypertest/)
+- A basic understanding of how to use Codemagic workflows
+- Basic Flutter knowledge
 
-# How to run Selenium automation tests on HyperTest (using PyUnit framework)
+## What is testing?
 
-* [Pre-requisites](#pre-requisites)
-   - [Download Concierge](#download-concierge)
-   - [Configure Environment Variables](#configure-environment-variables)
-   
-* [Matrix Execution with PyUnit](#matrix-execution-with-pyunit)
-   - [Core](#core)
-   - [Pre Steps and Dependency Caching](#pre-steps-and-dependency-caching)
-   - [Post Steps](#post-steps)
-   - [Artefacts Management](#artefacts-management)
-   - [Test Execution](#test-execution)
+Before software products are shipped to the market, dedicated software testers are hired to test these products to ensure they are not substandard and meet a specific level of performance. Software testing is the process of evaluating a software product to ensure it works as expected.
 
-* [Auto-Split Execution with PyUnit](#auto-split-execution-with-pyunit)
-   - [Core](#core-1)
-   - [Pre Steps and Dependency Caching](#pre-steps-and-dependency-caching-1)
-   - [Post Steps](#post-steps-1)
-   - [Artefacts Management](#artefacts-management-1)
-   - [Test Execution](#test-execution-1)
+## Types of testing
 
-* [Secrets Management](#secrets-management)
-* [Navigation in Automation Dashboard](#navigation-in-automation-dashboard)
+Different testing techniques can be organized into two main categories:
 
-# Pre-requisites
+**Manual testing**
 
-Before using HyperTest, you have to download Concierge CLI corresponding to the host OS. Along with it, you also need to export the environment variables *LT_USERNAME* and *LT_ACCESS_KEY* that are available in the [LambdaTest Profile](https://accounts.lambdatest.com/detail/profile) page.
+Usually, testers are hired to test software products without using any automated tools. In this case, they simulate the actions an end user might take when using the product. The purpose of manual testing is to check for bugs, performance issues, and other defects.
 
-## Download Concierge
+Manual testing is imperative, as automation is not possible 100% of the time. All newly created software is manually tested before conducting automated testing. Although manual testing is more “primitive” than automated testing, it can still be very effective.
 
-Concierge is a CLI for interacting and running the tests on the HyperTest Grid. Concierge provides a host of other useful features that accelerate test execution. In order to trigger tests using Concierge, you need to download the Concierge binary corresponding to the platform (or OS) from where the tests are triggered:
+**Automation testing**
 
-Also, it is recommended to download the binary in the project's parent directory. Shown below is the location from where you can download the Concierge binary: 
+Though manual testing can help uncover many issues in a software application, it is still not sufficient for performing other repetitive tasks that are difficult to carry out manually, like unit testing, smoke testing, regression testing, and API testing. It’s usually not feasible to test the written logic of your app manually.
 
-* Mac: https://downloads.lambdatest.com/concierge/darwin/concierge
-* Linux: https://downloads.lambdatest.com/concierge/linux/concierge
-* Windows: https://downloads.lambdatest.com/concierge/windows/concierge.exe
+To use automation tests efficiently, you have to write test scripts or use automation tools to help you perform these tasks.
 
-## Configure Environment Variables
+## What is LambdaTest?
 
-Before the tests are run, please set the environment variables LT_USERNAME & LT_ACCESS_KEY from the terminal. The account details are available on your [LambdaTest Profile](https://accounts.lambdatest.com/detail/profile) page.
+Testing products over different devices (and view port sizes) can be difficult, costly, and time consuming, especially when you have to run them on real devices. Even if it is possible to have some of these real devices, how many can you buy to cover all the different screen sizes and other specifications? And even if you get different devices for each platform, managing various versions might not be so easy. You would need to delete a particular version to install a new one, but what if you need it for some other product?
 
-For macOS:
+This is where LambdaTest, a Continuous Quality Testing Platform on Cloud, can be extremely useful since it supports manual and automated app testing on a Real Device Cloud. This lets you test your applications without worrying much about the procurement and maintainance of real mobile devices.
 
-```bash
-export LT_USERNAME=LT_USERNAME
-export LT_ACCESS_KEY=LT_ACCESS_KEY
-```
+[Wali - Can you please add details about the frameworks we support, device landscape, and any further information that will add value to the blog]
 
-For Linux:
+## Uses of LambdaTest
 
-```bash
-export LT_USERNAME=LT_USERNAME
-export LT_ACCESS_KEY=LT_ACCESS_KEY
-```
+Some of the main features of LambdaTest include:
 
-For Windows:
+**The ability to test responsiveness on all screens**
 
-```bash
-set LT_USERNAME=LT_USERNAME
-set LT_ACCESS_KEY=LT_ACCESS_KEY
-```
+With LambdaTest, you can test your application on different screen sizes and resolutions all in one place with one click. It is possible to test locally hosted apps using LambdaTest tunnel.
 
-# Matrix Execution with PyUnit
+**Compatibility testing**
 
-Matrix-based test execution is used for running the same tests across different test (or input) combinations. The Matrix directive in HyperTest YAML file is a *key:value* pair where value is an array of strings.
+With LambdaTest, you can perform compatibility tests of your mobile and web applications across different real devices, screen sizes, and operating systems. You can also perform compatibility testing across different browsers, browser versions, operating systems, and resolutions in real time.
 
-Also, the *key:value* pairs are opaque strings for HyperTest. For more information about matrix multiplexing, check out the [Matrix Getting Started Guide](https://www.lambdatest.com/support/docs/getting-started-with-hypertest/#matrix-based-build-multiplexing)
+**Testing across the latest desktop browsers**
 
-### Core
+Have you been wondering about how you can test a website or web application on different browsers and even operating systems?
 
-In the current example, matrix YAML file (*yaml/pyunit_hypertest_matrix_sample.yaml*) in the repo contains the following configuration:
+LambdaTest has made it simple to test across the latest desktop browsers, such as Google Chrome, Internet Explorer, Brave, Edge, Mozilla Firefox, Safari, Opera, and many more. You can run cross browser tests using manual as well as automated approach. LambdaTest suports automated web testing using popular test automation frameworks like Selenium, Cypress, Playwright, and Puppeteer.
 
-```yaml
-globalTimeout: 90
-testSuiteTimeout: 90
-testSuiteStep: 90
-```
+**Integration with Tools and Frameworks**
 
-Global timeout, testSuite timeout, and testSuite timeout are set to 90 minutes.
- 
-The target platform is set to Windows. Please set the *[runson]* key to *[mac]* if the tests have to be executed on the macOS platform. 
+LambdaTest offers real and live team support. LambdaTest supports integration with close to 120+ tools and frameworks, ranging from CI/CD tools, codeless automation tools, reporting tools, team communication tools and more. You can find more about [LambdaTest integrations](https://www.lambdatest.com/integrations) to deep dive into LambdaTest integrations landscape.
 
-```yaml
-runson: win
-```
+## How to use Codemagic with LambdaTest
 
-Python files in the 'tests' folder contain the test suites run on the HyperTest grid. In the example, the tests in the files *tests/lt_sample_todo.py* and *tests/lt_selenium_playground.py* run in parallel using the specified input combinations.
+LambdaTest provides two environments: **real-time testing** and **automation testing**. To use the Real-Time Testing environment in LambdaTest, Codemagic has to build our app in debug mode and make a cURL request. Automation testing needs to detect written test scripts to be able to use the automation environment.
 
-```yaml
-files: ["tests/lt_sample_todo.py", "tests/lt_selenium_playground.py"]
-```
+Furthermore, the test scripts are written with a test framework like [Appium](https://appium.io/docs/en/about-appium/getting-started/index.html). For Flutter, you can use [Appium Flutter Driver](https://github.com/appium-userland/appium-flutter-driver).
 
-The *testSuites* object contains a list of commands (that can be presented in an array). In the current YAML file, commands for executing the tests are put in an array (with a '-' preceding each item). The Python command is used to run tests in *.py* files. The files are mentioned as an array to the *files* key that is a part of the matrix.
+In this tutorial, we will be using the real-time environment to test our app manually. The app we will be using fetches the author details from an endpoint and displays their name in a ListWidget on the initial page. When the user taps an author, more detailed data is shown on another page.
 
-```yaml
-testSuites:
-  - python3 -s  $files
-```
+The state management solution used is flutter_bloc with unit testing.
 
-### Pre Steps and Dependency Caching
+`**Note: You can use an already existing app or build your own.**`
 
-Dependency caching is enabled in the YAML file to ensure that the package dependencies are not downloaded in subsequent runs. The first step is to set the Key used to cache directories.
+To get started, you can clone the app [here](https://github.com/maxiggle/Flutter-LambdaTest.git).
 
-```yaml
-cacheKey: '{{ checksum "requirements.txt" }}'
-```
+## codemagic.yaml file
 
-Set the array of files & directories to be cached. In the example, all the packages will be cached in the *CacheDir* directory.
+Codemagic has a workflow UI editor for Flutter applications to enable you to easily set up a CI/CD pipeline. But to work with LambdaTest, we need to use `codemagic.yaml` because we will be writing a custom script.
 
-```yaml
-cacheDirectories:
-  - CacheDir
-```
+You can find the complete script in my [repository](https://github.com/maxiggle/Flutter-LambdaTest/blob/master/codemagic.yaml).
 
-Steps (or commands) that must run before the test execution are listed in the *pre* run step. In the example, the packages listed in *requirements.txt* are installed using the *pip3* command.
+          - name: Submitting app to LambdaTest
+            script: |
+              cd ./build/app/outputs/apk/release
+              curl --location --request POST "https://manual-api.lambdatest.com/app/upload/realDevice" --header "Authorization: Basic $LAMBDATEST " --form "name='lambda1'" --form "appFile=@app-release.apk"
 
-The *--cache-dir* option is used for specifying the location of the directory used for caching the packages (i.e. *CacheDir*). It is important to note that downloaded cached packages are securely uploaded to a secure cloud before the execution environment is auto-purged after build completion. Please modify *requirements.txt* as per the project requirements.
+The above script finds the APK file after it has been built on Codemagic’s remote machine using the bash command `cd ./build/app/outputs/apk/release` and uploads the APK file as packets to LambdaTest.
 
-```yaml
-pre:
-  - pip3 install -r requirements.txt --cache-dir CacheDir
-```
+- `$LAMBDATEST`: holds my credentials to log in to the server
+- `--form "name='lambda1'"`: the display name for the upload APK
+- `--form "appFile=@app-release.apk"`: holds the APK file for upload
 
-### Post Steps
+For this script to work, you will need two credentials: your username and access token. You can find them in the `App Automation` section of your dashboard in LambdaTest.
 
-Steps (or commands) that need to run after the test execution are listed in the *post* step. In the example, we *cat* the contents of *yaml/pyunit_hypertest_matrix_sample.yaml*
+![](https://paper-attachments.dropbox.com/s_ABDEC71411CB38C7426C7AF547234560ABBACB1338C0393CA42CA7D5B87B81D5_1659064574411_Screenshot+2022-07-29+at+04.13.15.png)
 
-```yaml
-post:
-  - cat yaml/pyunit_hypertest_matrix_sample.yaml
-```
+To use these credentials, you need to convert them into base64 in the format `Username:AccessToken`. You can convert these words using your dev tool in the browser or use this [tool](https://mixedanalytics.com/knowledge-base/api-connector-encode-credentials-to-base-64/) to make the conversions easily.
 
-### Artefacts Management
+Once you have converted your credentials, you can encrypt them as environmental variables and inject them into the cURL (client URL).
 
-The *mergeArtifacts* directive (which is by default *false*) is set to *true* for merging the artefacts and combing artefacts generated under each task.
+You can use the provided tool on Codemagic to perform the encryption. To read more about environmental variables, check out the [documentation](https://docs.codemagic.io/variables/environment-variable-groups/).
 
-The *uploadArtefacts* directive informs HyperTest to upload artefacts [files, reports, etc.] generated after task completion. In the example, *path* consists of a regex for parsing the directory (i.e. *example_1* and *example_2* that contains the test reports).
+![](https://paper-attachments.dropbox.com/s_ABDEC71411CB38C7426C7AF547234560ABBACB1338C0393CA42CA7D5B87B81D5_1659066531085_Screenshot+2022-07-29+at+04.45.43.png)
 
-```yaml
-mergeArtifacts: true
+Once a new build is triggered, your app should be uploaded to LambdaTest.
 
-uploadArtefacts:
-  [
-    {
-      "name": "example_1",
-      "path": ["example_1/**"]
-    },
-    {
-      "name": "example_2",
-      "path": ["example_2/**"]
-    }
-  ]
-```
+![](https://paper-attachments.dropbox.com/s_ABDEC71411CB38C7426C7AF547234560ABBACB1338C0393CA42CA7D5B87B81D5_1659073131703_Screenshot+2022-07-29+at+06.28.25.png)
 
-HyperTest also facilitates the provision to download the artefacts on your local machine. To download the artefacts, click on Artefacts button corresponding to the associated TestID.
+## Testing our Flutter application on real devices
 
-<img width="1425" alt="pyunit_matrix_artefacts_1" src="https://user-images.githubusercontent.com/1688653/152557067-5a7a6340-b4de-42c4-8805-de2ba403b851.png">
+In this section, we will look at how to install our Flutter app on a device and how it works manually.
 
-Now, you can download the artefacts by clicking on the Download button as shown below:
+![](https://paper-attachments.dropbox.com/s_ABDEC71411CB38C7426C7AF547234560ABBACB1338C0393CA42CA7D5B87B81D5_1659074357083_Screenshot+2022-07-29+at+06.57.44.png)
 
-<img width="1425" alt="pyunit_matrix_artefacts_2" src="https://user-images.githubusercontent.com/1688653/152557101-1216351b-5461-4729-8d26-a1ab2def068e.png">
+Based on the image above, our app has been uploaded successfully on LambdaTest. To start manual testing, you need to hit the start button to install the app.
 
-## Test Execution
+Once the application is installed, you can test your app on different devices with various screen sizes. You can also integrate Slack and other communication channels for your team.
 
-The CLI option *--config* is used for providing the custom HyperTest YAML file (i.e. *yaml/pyunit_hypertest_matrix_sample.yaml*). Run the following command on the terminal to trigger the tests in Python files on the HyperTest grid. The *--download-artifacts* option is used to inform HyperTest to download the artefacts for the job.
+Here is a video that shows how it works:
 
-```bash
-./concierge --download-artifacts --config --verbose yaml/pyunit_hypertest_matrix_sample.yaml
-```
+//screen record here [Screen Recording 2022-07-29 at 07.18.46.mov](https://www.dropbox.com/aa/view_file?file_id=id:pvCrckYDq0YAAAAAAAAAjw&role=personal)
 
-Visit [HyperTest Automation Dashboard](https://automation.lambdatest.com/hypertest) to check the status of execution:
+## Conclusion
 
-<img width="1430" alt="pyunit_matrix_execution_latest" src="https://user-images.githubusercontent.com/1688653/153026702-fc5c23aa-acd7-4e35-9b8a-dd0d8af1207c.png">
+In this article, we have learned about the basics of LambdaTest and its features and uses. We also learned about software testing and its two main categories, namely, manual and automation testing. We then described how to publish our application to LambdaTest to use the real-time testing environment. For further reading and resources, check the resources section.
 
-Shown below is the execution screenshot when the YAML file is triggered from the terminal:
+## Resources
 
-<img width="1413" alt="pyunit_cli_execution" src="https://user-images.githubusercontent.com/1688653/152514085-8b56de2b-4b92-4b81-a94d-58757f9cb3f7.png">
-
-<img width="1101" alt="pyunit_cli2_execution" src="https://user-images.githubusercontent.com/1688653/152516090-b06d3d80-145f-477a-b1ed-25c1d0be3be5.png">
-
-## Auto-Split Execution with PyUnit
-
-Auto-split execution mechanism lets you run tests at predefined concurrency and distribute the tests over the available infrastructure. Concurrency can be achieved at different levels - file, module, test suite, test, scenario, etc.
-
-For more information about auto-split execution, check out the [Auto-Split Getting Started Guide](https://www.lambdatest.com/support/docs/getting-started-with-hypertest/#smart-auto-test-splitting)
-
-### Core
-
-Auto-split YAML file (*yaml/pyunit_hypertest_autosplit_sample.yaml*) in the repo contains the following configuration:
-
-```yaml
-globalTimeout: 90
-testSuiteTimeout: 90
-testSuiteStep: 90
-```
-
-Global timeout, testSuite timeout, and testSuite timeout are set to 90 minutes.
- 
-The *runson* key determines the platform (or operating system) on which the tests are executed. Here we have set the target OS as Windows.
-
-```yaml
-runson: win
-```
-
-Auto-split is set to true in the YAML file.
-
-```yaml
- autosplit: true
-``` 
-
-*retryOnFailure* is set to true, instructing HyperTest to retry failed command(s). The retry operation is carried out till the number of retries mentioned in *maxRetries* are exhausted or the command execution results in a *Pass*. In addition, the concurrency (i.e. number of parallel sessions) is set to 2.
-
-```yaml
-retryOnFailure: true
-maxRetries: 5
-concurrency: 2
-```
-
-## Pre Steps and Dependency Caching
-
-To leverage the advantage offered by *Dependency Caching* in HyperTest, the integrity of *requirements.txt* is checked using the checksum functionality.
-
-```yaml
-cacheKey: '{{ checksum "requirements.txt" }}'
-```
-
-By default, *pip* in Python saves the downloaded packages in the cache so that next time, the package download request can be serviced from the cache (rather than re-downloading it again).
-
-The caching advantage offered by *pip* can be leveraged in HyperTest, whereby the downloaded packages can be stored (or cached) in a secure server for future executions. The packages available in the cache will only be used if the checksum stage results in a Pass.
-
-The *cacheDirectories* directive is used for specifying the directory where the packages have to be cached. The mentioned directory will override the default directory where Python packages are usually cached; further information about caching in pip is available [here](https://pip.pypa.io/en/stable/cli/pip_cache/). The packages downloaded using pip will be cached in the directory (or location) mentioned under the *cacheDirectories* directive.
-
-In our case, the downloaded packages are cached in the *CacheDir* folder in the project's root directory. The folder is automatically created when the packages mentioned in *requirements.txt* are downloaded.  
-
-```yaml
-cacheDirectories:
-  - CacheDir
-```
-
-Content under the *pre* directive is the precondition that will run before the tests are executed on the HyperTest grid. The *--cache-dir* option in *pip3* is used for specifying the cache directory. It is important to note that downloaded cached packages are securely uploaded to a secure cloud before the execution environment is auto-purged after build completion. Please modify *requirements.txt* as per the project requirements.
-
-```yaml
-pip3 install -r requirements.txt  --cache-dir CacheDir
-```
-
-## Post Steps
-
-The *post* directive contains a list of commands that run as a part of post-test execution. Here, the contents of *yaml/pyunit_hypertest_autosplit_sample.yaml* are read using the *cat* command as a part of the post step. 
-
-```yaml
-post:
-  - cat yaml/pyunit_hypertest_autosplit_sample.yaml
-```
-
-The *testDiscovery* directive contains the command that gives details of the mode of execution, along with detailing the command that is used for test execution. Here, we are fetching the list of Python files that would be further executed using the *value* passed in the *testRunnerCommand*
-
-```yaml
-testDiscovery:
-  type: raw
-  mode: dynamic
-  command: grep -nri 'HyperTestPyUnit' tests -ir --include=\*.py | sed 's/:.*//'
-  
-testRunnerCommand: python3 -s $test
-```
-
-Running the above command on the terminal will give a list of Python files that are located in the Project folder:
-
-* tests/lt_selenium_playground.py
-* tests/lt_sample_todo.py
-
-The *testRunnerCommand* contains the command that is used for triggering the test. The output fetched from the *testDiscoverer* command acts as an input to the *testRunner* command.
-
-```yaml
-testRunnerCommand: python3 -s $test
-```
-
-### Artefacts Management
-
-The *mergeArtifacts* directive (which is by default *false*) is set to *true* for merging the artefacts and combing artefacts generated under each task.
-
-The *uploadArtefacts* directive informs HyperTest to upload artefacts [files, reports, etc.] generated after task completion.  In the example, *path* consists of a regex for parsing the directory (i.e. *example_1* and *example_2* that contains the test reports).
-
-```yaml
-mergeArtifacts: true
-
-uploadArtefacts:
-  [
-    {
-      "name": "example_1",
-      "path": ["example_1/**"]
-    },
-    {
-      "name": "example_2",
-      "path": ["example_2/**"]
-    }
-  ]
-```
-HyperTest also facilitates the provision to download the artefacts on your local machine. To download the artefacts, click on *Artefacts* button corresponding to the associated TestID.
-
-<img width="1235" alt="pyunit_autosplit_artefacts_1" src="https://user-images.githubusercontent.com/1688653/152527265-27011c1c-95ee-4ff5-ae56-e570a0c4391a.png">
-
-Now, you can download the artefacts by clicking on the *Download* button as shown below:
-
-<img width="1420" alt="pyunit_autosplit_artefacts_2" src="https://user-images.githubusercontent.com/1688653/152527278-57a071f2-7b17-4a2a-822a-7bf9759a7531.png">
-
-### Test Execution
-
-The CLI option *--config* is used for providing the custom HyperTest YAML file (i.e. *yaml/pyunit_hypertest_autosplit_sample.yaml*). Run the following command on the terminal to trigger the tests in Python files on the HyperTest grid. The *--download-artifacts* option is used to inform HyperTest to download the artefacts for the job.
-
-```bash
-./concierge --download-artifacts --verbose --config yaml/pyunit_hypertest_autosplit_sample.yaml
-```
-
-Visit [HyperTest Automation Dashboard](https://automation.lambdatest.com/hypertest) to check the status of execution
-
-<img width="1426" alt="pyunit_autosplit_execution_latest" src="https://user-images.githubusercontent.com/1688653/153028127-c3c21f07-cffa-4fe7-a08e-0d78c2542b8a.png">
-
-Shown below is the execution screenshot when the YAML file is triggered from the terminal:
-
-<img width="1421" alt="pyunit_autosplit_execution_1" src="https://user-images.githubusercontent.com/1688653/152998595-7e310650-590f-493b-b498-fec82cf01a88.png">
-
-<img width="1408" alt="pyunit_autosplit_cli2_execution" src="https://user-images.githubusercontent.com/1688653/152523202-7da45332-560c-4e9b-b77b-8e750faea20d.png">
-
-## Secrets Management
-
-In case you want to use any secret keys in the YAML file, the same can be set by clicking on the *Secrets* button the dashboard.
-
-<img width="703" alt="pyunit_secrets_key_1" src="https://user-images.githubusercontent.com/1688653/152540968-90e4e8bc-3eb4-4259-856b-5e513cbd19b5.png">
-
-Now create a *secret* key that you can use in the HyperTest YAML file.
-
-<img width="359" alt="secrets_management_1" src="https://user-images.githubusercontent.com/1688653/153250877-e58445d1-2735-409a-970d-14253991c69e.png">
-
-All you need to do is create an environment variable that uses the secret key:
-
-```yaml
-env:
-  PAT: ${{ .secrets.testKey }}
-```
-
-## Navigation in Automation Dashboard
-
-HyperTest lets you navigate from/to *Test Logs* in Automation Dashboard from/to *HyperTest Logs*. You also get relevant get relevant Selenium test details like video, network log, commands, Exceptions & more in the Dashboard. Effortlessly navigate from the automation dashboard to HyperTest logs (and vice-versa) to get more details of the test execution.
-
-Shown below is the HyperTest Automation dashboard which also lists the tests that were executed as a part of the test suite:
-
-<img width="1238" alt="pyunit_hypertest_automation_dashboard" src="https://user-images.githubusercontent.com/1688653/152553665-9411f98c-e8de-487a-97a7-04310f8ef43a.png">
-
-Here is a screenshot that lists the automation test that was executed on the HyperTest grid:
-
-<img width="1425" alt="pyunit_testing_automation_dashboard" src="https://user-images.githubusercontent.com/1688653/152553689-817191b9-db5b-4fa9-a233-df1779929191.png">
-
-## We are here to help you :)
-* LambdaTest Support: [support@lambdatest.com](mailto:support@lambdatest.com)
-* HyperTest HomePage: https://www.lambdatest.com/support/docs/getting-started-with-hypertest/
-* Lambdatest HomePage: https://www.lambdatest.com
-
-## License
-Licensed under the [MIT license](LICENSE).
+- [GitHub](https://github.com/maxiggle/Flutter-LambdaTest.git)
+- [LambdaTest integration](https://docs.codemagic.io/integrations/lambdatest-integration/)
+- [Read more about LambdaTest](https://thenewstack.io/how-lambdatest-automates-cross-browser-testing-from-the-cloud/)
